@@ -1,0 +1,243 @@
+// SPDX-License-Identifier: GPL-2.0+ OR MIT
+/*
+ * Apple M3 MacBook Air/Pro and iMac (M3, 2023/2024)
+ *
+ * This file contains parts common to all Apple M3 devices using the t8122.
+ *
+ * target-type: J433, J434, J504, J513, J515
+ *
+ * Copyright The Asahi Linux Contributors
+ */
+
+/ {
+	aliases {
+		// atcphy0 = &atcphy0;
+		serial0 = &serial0;
+	};
+
+	chosen {
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+
+		simple-framebuffer = &framebuffer0;
+	};
+
+	framebuffer0: framebuffer@103d3858000 {
+		compatible = "simple-framebuffer";
+		reg = <0x103 0xd3858000 0x0 0x16a7f00>;
+		width = <3024>;
+		height = <1964>;
+		stride = <12096>;
+		format = "x2r10g10b10";
+		//power-domains = <&ps_disp_cpu>;
+		status = "okay";
+	};
+
+	reserved-memory {
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+		/* To be filled by loader */
+	};
+
+	memory@800000000 {
+		device_type = "memory";
+		reg = <0x8 0 0x2 0>; /* To be filled by loader */
+	};
+};
+
+&serial0 {
+	status = "okay";
+};
+
+#ifdef T8122_BRINGUP_UNKNOWN
+&i2c0 {
+	status = "okay";
+
+	hpm0: usb-pd@38 {
+		compatible = "apple,cd321x";
+		reg = <0x38>;
+		interrupt-parent = <&pinctrl_ap>;
+		interrupts = <8 IRQ_TYPE_LEVEL_LOW>;
+		interrupt-names = "irq";
+
+		typec0: connector {
+			compatible = "usb-c-connector";
+			power-role = "dual";
+			data-role = "dual";
+
+			ports {
+				#address-cells = <1>;
+				#size-cells = <0>;
+				port@0 {
+					reg = <0>;
+					typec0_con_hs: endpoint {
+						remote-endpoint = <&typec0_usb_hs>;
+					};
+				};
+				port@1 {
+					reg = <1>;
+					typec0_con_ss: endpoint {
+						remote-endpoint = <&typec0_usb_ss>;
+					};
+				};
+			};
+		};
+	};
+
+	hpm1: usb-pd@3f {
+		compatible = "apple,cd321x";
+		reg = <0x3f>;
+		interrupt-parent = <&pinctrl_ap>;
+		interrupts = <8 IRQ_TYPE_LEVEL_LOW>;
+		interrupt-names = "irq";
+
+		typec1: connector {
+			compatible = "usb-c-connector";
+			power-role = "dual";
+			data-role = "dual";
+
+			ports {
+				#address-cells = <1>;
+				#size-cells = <0>;
+				port@0 {
+					reg = <0>;
+					typec1_con_hs: endpoint {
+						remote-endpoint = <&typec1_usb_hs>;
+					};
+				};
+				port@1 {
+					reg = <1>;
+					typec1_con_ss: endpoint {
+						remote-endpoint = <&typec1_usb_ss>;
+					};
+				};
+			};
+		};
+	};
+};
+
+/* USB controllers */
+&dwc3_0 {
+	port {
+		typec0_usb_hs: endpoint {
+			remote-endpoint = <&typec0_con_hs>;
+		};
+	};
+};
+
+&dwc3_1 {
+	port {
+		typec1_usb_hs: endpoint {
+			remote-endpoint = <&typec1_con_hs>;
+		};
+	};
+};
+
+/* Type-C PHYs */
+&atcphy0 {
+	port {
+		typec0_usb_ss: endpoint {
+			remote-endpoint = <&typec0_con_ss>;
+		};
+	};
+};
+
+&atcphy1 {
+	port {
+		typec1_usb_ss: endpoint {
+			remote-endpoint = <&typec1_con_ss>;
+		};
+	};
+};
+
+
+&i2c1 {
+	status = "okay";
+};
+
+&i2c2 {
+	status = "okay";
+};
+
+&i2c3 {
+	status = "okay";
+};
+
+&nco_clkref {
+	clock-frequency = <900000000>;
+};
+
+#include "spi1-nvram.dtsi"
+#endif // T8122_BRINGUP_UNKNOWN
+
+/* USB controllers */
+// &dwc3_0 {
+// 	port {
+// 		typec0_usb_hs: endpoint {
+// 			remote-endpoint = <&typec0_con_hs>;
+// 		};
+// 	};
+// };
+
+/* Type-C PHYs */
+// &atcphy0 {
+// 	port {
+// 		typec0_usb_ss: endpoint {
+// 			remote-endpoint = <&typec0_con_ss>;
+// 		};
+// 	};
+// };
+
+
+&i2c0 {
+	status = "okay";
+
+	hpm0: usb-pd@38 {
+		compatible = "apple,cd321x";
+		reg = <0x38>;
+		interrupt-parent = <&pinctrl_ap>;
+		interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
+		interrupt-names = "irq";
+	};
+
+	hpm1: usb-pd@3f {
+		compatible = "apple,cd321x";
+		reg = <0x3f>;
+		interrupt-parent = <&pinctrl_ap>;
+		interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
+		interrupt-names = "irq";
+	};
+
+	// hpm0: usb-pd@56 {
+	// 	compatible = "apple,cd321x";
+	// 	reg = <0x56>;
+	// 	interrupt-parent = <&pinctrl_ap>;
+	// 	interrupts = <8 IRQ_TYPE_LEVEL_LOW>;
+	// 	interrupt-names = "irq";
+
+	// 	typec0: connector {
+	// 		compatible = "usb-c-connector";
+	// 		power-role = "dual";
+	// 		data-role = "dual";
+
+	// 		ports {
+	// 			#address-cells = <1>;
+	// 			#size-cells = <0>;
+	// 			port@0 {
+	// 				reg = <0>;
+	// 				typec0_con_hs: endpoint {
+	// 					remote-endpoint = <&typec0_usb_hs>;
+	// 				};
+	// 			};
+	// 			port@1 {
+	// 				reg = <1>;
+	// 				typec0_con_ss: endpoint {
+	// 					remote-endpoint = <&typec0_usb_ss>;
+	// 				};
+	// 			};
+	// 		};
+	// 	};
+	// };
+};
