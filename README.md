@@ -1,3 +1,6 @@
+# What is this?
+This is a handcrafted device tree for M3 j504 t8122, which is capable of booting linux kernel to somewhat working state
+
 # WARNING
 I probably don't know what am i doing, but it works. These DTs will not work with generic linux kernel, nor with asahi kernel as it requires patched kernel. But there's a patched version by Janne Grunau, which fixes the AIC v3: https://github.com/jannau/linux/tree/t8122-j504
 They also provided DT, which will work, but the keyboard functionality is broken in their DT, which i fixed, as well as some other things.
