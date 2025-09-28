@@ -741,13 +741,13 @@
 		label = "atc0_common";
 	};
 
-// 	ps_atc1_common: power-controller@408 {
-// 		compatible = "apple,t8122-pmgr-pwrstate", "apple,pmgr-pwrstate";
-// 		reg = <0x408 4>;
-// 		#power-domain-cells = <0>;
-// 		#reset-cells = <0>;
-// 		label = "atc1_common";
-// 	};
+	ps_atc1_common: power-controller@408 {
+		compatible = "apple,t8122-pmgr-pwrstate", "apple,pmgr-pwrstate";
+		reg = <0x408 4>;
+		#power-domain-cells = <0>;
+		#reset-cells = <0>;
+		label = "atc1_common";
+	};
 
 // 	ps_dispext_sys: power-controller@410 {
 // 		compatible = "apple,t8122-pmgr-pwrstate", "apple,pmgr-pwrstate";
@@ -1135,13 +1135,13 @@
 		label = "atc0_usb_aon";
 	};
 
-// 	ps_atc1_usb_aon: power-controller@b8 {
-// 		compatible = "apple,t8122-pmgr-pwrstate", "apple,pmgr-pwrstate";
-// 		reg = <0xb8 4>;
-// 		#power-domain-cells = <0>;
-// 		#reset-cells = <0>;
-// 		label = "atc1_usb_aon";
-// 	};
+	ps_atc1_usb_aon: power-controller@b8 {
+		compatible = "apple,t8122-pmgr-pwrstate", "apple,pmgr-pwrstate";
+		reg = <0xb8 4>;
+		#power-domain-cells = <0>;
+		#reset-cells = <0>;
+		label = "atc1_usb_aon";
+	};
 
 	ps_atc0_usb: power-controller@c0 {
 		compatible = "apple,t8112-pmgr-pwrstate", "apple,pmgr-pwrstate";
@@ -1152,12 +1152,12 @@
 		power-domains = <&ps_atc0_usb_aon>, <&ps_atc0_common>;
 	};
 
-// 	ps_atc1_usb: power-controller@c8 {
-// 		compatible = "apple,t8122-pmgr-pwrstate", "apple,pmgr-pwrstate";
-// 		reg = <0xc8 4>;
-// 		#power-domain-cells = <0>;
-// 		#reset-cells = <0>;
-// 		label = "atc1_usb";
-// 		power-domains = <&ps_atc1_usb_aon>, <&ps_atc1_common>;
-// 	};
+	ps_atc1_usb: power-controller@c8 {
+		compatible = "apple,t8122-pmgr-pwrstate", "apple,pmgr-pwrstate";
+		reg = <0xc8 4>;
+		#power-domain-cells = <0>;
+		#reset-cells = <0>;
+		label = "atc1_usb";
+		power-domains = <&ps_atc1_usb_aon>, <&ps_atc1_common>;
+	};
 };
