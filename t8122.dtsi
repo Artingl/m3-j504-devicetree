@@ -1017,7 +1017,8 @@
 		};
 
 		ans_mbox: mbox@309408000 {
-			compatible = "apple,t8122-asc-mailbox", "apple,asc-mailbox-v4";
+			// compatible = "apple,m3-mailbox-v2", "apple,asc-mailbox-v4";
+			compatible = "apple,asc-mailbox-v4";
 			reg = <0x3 0x09408000 0x0 0x4000>;
 			interrupt-parent = <&aic>;
 			interrupts = <AIC_IRQ 730 IRQ_TYPE_LEVEL_HIGH>,
@@ -1027,15 +1028,26 @@
 			interrupt-names = "send-empty", "send-not-empty",
 				"recv-empty", "recv-not-empty";
 			#mbox-cells = <0>;
-			// power-domains = <&ps_ans>;
+			power-domains = <&ps_ans>;
 		};
 
-		// sart: sart@30dc50000 {
-		// 	compatible = "apple,t8122-sart", "apple,t6000-sart";
-		// 	reg = <0x3 0x0dc50000 0x0 0xc000>;
-		// 	// power-domains = <&ps_ans>;
-		// };
+		sart: sart@30dc50000 {
+			compatible = "apple,t8122-sart", "apple,t8112-sart", "apple,t6000-sart";
+			reg = <0x3 0x0dc50000 0x0 0x10000>;
+			power-domains = <&ps_ans>;
+		};
 
+		// XXX: The nvme drivers seems to crash system.
+		//		From what i've found, it happens when kernel performs this code:
+		//		```
+		//		writel(readl(anv->mmio_nvme + APPLE_ANS_UNKNOWN_CTRL) &
+		//        	~APPLE_ANS_PRP_NULL_CHECK,
+	    //    		anv->mmio_nvme + APPLE_ANS_UNKNOWN_CTRL);
+		//		```
+		//
+		//		If you just skip this, the driver will continue initialization, but later
+		//		ans will complain with error like BAD_CMD
+		//		(tho that's exactly what mentioned in the kernel sources in linux/drivers/nvme/host/apple.c)
 		// nvme@30dcc0000 {
 		// 	compatible = "apple,t8122-nvme-ans2", "apple,nvme-ans2";
 		// 	reg = <0x3 0x0dcc0000 0x0 0x60000>,
@@ -1045,19 +1057,10 @@
 		// 	interrupts = <AIC_IRQ 742 IRQ_TYPE_LEVEL_HIGH>;
 		// 	mboxes = <&ans_mbox>;
 		// 	apple,sart = <&sart>;
-		// 	// power-domains = <&ps_ans>, <&ps_apcie_st>;
-		// 	// power-domain-names = "ans", "apcie0";
-		// 	// resets = <&ps_ans>;
+		// 	power-domains = <&ps_ans>, <&ps_apcie_st>;
+		// 	power-domain-names = "ans", "apcie0";
+		// 	resets = <&ps_ans>;
 		// };
-
-		// 0 0x702280000 0x11800
-		// 1 0x702200000 0x4000
-		// 2 0x70228c000 0x5800
-		// 3 0x702a84000 0x4000
-		// 4 0x702800000 0x4000
-		// 5 0x702a80000 0x4000
-		// 6 0x702000000 0x4000
-		// 7 0x702080000 0x4000
 		
 		dwc3_0: usb@702280000 {
 			compatible = "apple,t8122-dwc3", "apple,dwc3", "snps,dwc3";

@@ -717,21 +717,21 @@
 // 		apple,always-on;
 // 	};
 
-// 	ps_apcie: power-controller@3f0 {
-// 		compatible = "apple,t8122-pmgr-pwrstate", "apple,pmgr-pwrstate";
-// 		reg = <0x3f0 4>;
-// 		#power-domain-cells = <0>;
-// 		#reset-cells = <0>;
-// 		label = "apcie";
-// 	};
+	ps_apcie: power-controller@3f0 {
+		compatible = "apple,t8122-pmgr-pwrstate", "apple,pmgr-pwrstate";
+		reg = <0x3f0 4>;
+		#power-domain-cells = <0>;
+		#reset-cells = <0>;
+		label = "apcie";
+	};
 
-// 	ps_ans: power-controller@3f8 {
-// 		compatible = "apple,t8122-pmgr-pwrstate", "apple,pmgr-pwrstate";
-// 		reg = <0x3f8 4>;
-// 		#power-domain-cells = <0>;
-// 		#reset-cells = <0>;
-// 		label = "ans";
-// 	};
+	ps_ans: power-controller@3f8 {
+		compatible = "apple,t8122-pmgr-pwrstate", "apple,pmgr-pwrstate";
+		reg = <0x3f8 4>;
+		#power-domain-cells = <0>;
+		#reset-cells = <0>;
+		label = "ans";
+	};
 
 	ps_atc0_common: power-controller@400 {
 		compatible = "apple,t8112-pmgr-pwrstate", "apple,pmgr-pwrstate";
@@ -807,14 +807,14 @@
 // 		power-domains = <&ps_apcie>;
 // 	};
 
-// 	ps_apcie_st: power-controller@448 {
-// 		compatible = "apple,t8122-pmgr-pwrstate", "apple,pmgr-pwrstate";
-// 		reg = <0x448 4>;
-// 		#power-domain-cells = <0>;
-// 		#reset-cells = <0>;
-// 		label = "apcie_st";
-// 		power-domains = <&ps_ans>, <&ps_apcie>;
-// 	};
+	ps_apcie_st: power-controller@448 {
+		compatible = "apple,t8122-pmgr-pwrstate", "apple,pmgr-pwrstate";
+		reg = <0x448 4>;
+		#power-domain-cells = <0>;
+		#reset-cells = <0>;
+		label = "apcie_st";
+		power-domains = <&ps_ans>, <&ps_apcie>;
+	};
 
 // 	ps_pmp: power-controller@450 {
 // 		compatible = "apple,t8122-pmgr-pwrstate", "apple,pmgr-pwrstate";
