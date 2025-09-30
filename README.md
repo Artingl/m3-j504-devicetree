@@ -9,7 +9,7 @@ My DTs are actually based on their DTs, but I fixed some things.
 
 My DT has some hardcoded values, like FB base, which might be different on your device
 # Things that do work
-Currently these things work: aic v3, only single cpu core (no smp), dart, mtp and keyboard, simple drm framebuffer, usb2 support
+Currently these things work: aic v3, only single cpu core (no smp), dart, mtp and keyboard, simple drm framebuffer, usb2 support, smc (battery status, etc.)
 
 ### Arch Linux booted via USB
 ![Arch Linux](arch.jpg "Arch Linux booted via USB")

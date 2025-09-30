@@ -59,9 +59,9 @@
 	apple,afe-reset-gpios = <&smc_gpio 8 GPIO_ACTIVE_LOW>;
 	apple,stm-reset-gpios = <&smc_gpio 24 GPIO_ACTIVE_LOW>;
 
-	multi-touch {
-		firmware-name = "apple/tpmtfw-j504.bin";
-	};
+	// multi-touch {
+	// 	firmware-name = "apple/tpmtfw-j504.bin";
+	// };
 
 	keyboard: keyboard {
 		hid-country-code = <0>;
@@ -71,9 +71,9 @@
 	stm {
 	};
 
-	actuator {
-	};
+	// actuator {
+	// };
 
-	tp_accel {
-	};
+	// tp_accel {
+	// };
 };
